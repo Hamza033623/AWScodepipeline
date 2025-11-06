@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Updating system and installing Nginx..."
+      - apt-get update -y
+      - apt-get install -y nginx
+  build:
+    commands:
+      - echo "Copying files to web root..."
+      - cp index.html /var/www/html/index.html
+      - echo "Restarting Nginx..."
+      - systemctl restart nginx || service nginx restart
+  post_build:
+    commands:
+      - echo "Build completed successfully at $(date)"
+artifacts:
+  files:
+    - index.html
